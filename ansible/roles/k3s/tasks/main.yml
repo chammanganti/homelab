@@ -1,0 +1,19 @@
+---
+- name: check if k3s is already installed
+  stat:
+    path: /usr/local/bin/k3s
+  register: k3s_binary
+
+- name: install k3s
+  shell: |
+    curl -sfL https://get.k3s.io | sh -s - \
+      --disable traefik \
+      --disable servicelb \
+      --disable local-storage
+  when: not k3s_binary.stat.exists
+
+- name: ensure k3s is started and enabled
+  systemd:
+    name: k3s
+    state: started
+    enabled: yes

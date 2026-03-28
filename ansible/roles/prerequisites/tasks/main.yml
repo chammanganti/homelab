@@ -1,0 +1,32 @@
+---
+- name: install required packages
+  apt:
+    name:
+      - curl
+      - apt-transport-https
+      - ca-certificates
+    state: present
+    update_cache: yes
+
+- name: load br_netfilter module
+  modprobe:
+    name: br_netfilter
+    state: present
+
+- name: persist br_netfilter on boot
+  lineinfile:
+    path: /etc/modules-load.d/k3s.conf
+    line: br_netfilter
+    create: yes
+
+- name: set sysctl params for k3s
+  sysctl:
+    name: "{{ item.key }}"
+    value: "{{ item.value }}"
+    sysctl_set: yes
+    state: present
+    reload: yes
+  loop:
+    - { key: net.bridge.bridge-nf-call-iptables, value: 1 }
+    - { key: net.bridge.bridge-nf-call-ip6tables, value: 1 }
+    - { key: net.ipv4.ip_forward, value: 1 }

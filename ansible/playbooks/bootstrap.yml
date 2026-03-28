@@ -1,0 +1,8 @@
+---
+- name: bootstrap rpi
+  hosts: rpi
+  become: true
+  roles:
+    - common
+    - prerequisites
+    - k3s
