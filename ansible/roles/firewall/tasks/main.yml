@@ -1,0 +1,85 @@
+---
+- name: install ufw
+  apt:
+    name: ufw
+    state: present
+
+- name: set default forward policy
+  lineinfile:
+    path: /etc/default/ufw
+    regexp: '^DEFAULT_FORWARD_POLICY='
+    line: 'DEFAULT_FORWARD_POLICY="ACCEPT"'
+  notify: reload ufw
+
+- name: add flannel nat rules
+  blockinfile:
+    path: /etc/ufw/before.rules
+    insertbefore: '\*filter'
+    block: |
+      *nat
+      :POSTROUTING ACCEPT [0:0]
+      -A POSTROUTING -s {{ k3s_pod_cidr }} -o eth0 -j MASQUERADE
+      COMMIT
+  notify: reload ufw
+
+- name: allow ssh
+  ufw:
+    rule: allow
+    port: 22
+    proto: tcp
+
+- name: allow http
+  ufw:
+    rule: allow
+    port: 80
+    proto: tcp
+
+- name: allow https
+  ufw:
+    rule: allow
+    port: 443
+    proto: tcp
+
+- name: allow k3s api
+  ufw:
+    rule: allow
+    port: 6443
+    proto: tcp
+    src: 192.168.254.0/24
+
+- name: allow flannel vxlan
+  ufw:
+    rule: allow
+    port: 8472
+    proto: udp
+    src: 192.168.254.0/24
+
+- name: allow kubelet
+  ufw:
+    rule: allow
+    port: 10250
+    proto: tcp
+    src: 192.168.254.0/24
+
+- name: allow pod cidr
+  ufw:
+    rule: allow
+    src: "{{ k3s_pod_cidr }}"
+
+- name: allow svc cidr
+  ufw:
+    rule: allow
+    src: "{{ k3s_service_cidr }}"
+
+- name: allow home assistant
+  ufw:
+    rule: allow
+    port: 8123
+    proto: tcp
+    src: 192.168.254.0/24
+
+- name: enable ufw
+  ufw:
+    state: enabled
+    policy: deny
+    direction: incoming
