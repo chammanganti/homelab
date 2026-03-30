@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: wildcard-chammanganti-dev
+  namespace: cert-manager
+spec:
+  secretName: wildcard-chammanganti-dev-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  dnsNames:
+    - "chammanganti.dev"
+    - "*.chammanganti.dev"
