@@ -2,6 +2,21 @@ locals {
   k3s_config = "${get_env("HOME")}/.kube/homelab"
 }
 
+generate "backend" {
+  path      = "backend.tf"
+  if_exists = "overwrite"
+  contents  = <<EOF
+terraform {
+  cloud {
+    organization = "chammanganti-homelab"
+    workspaces {
+      name = "homelab-${path_relative_to_include()}"
+    }
+  }
+}
+EOF
+}
+
 generate "provider" {
   path      = "provider.tf"
   if_exists = "overwrite_terragrunt"
@@ -15,13 +30,6 @@ terraform {
     kubectl = {
       source  = "alekc/kubectl"
       version = "2.1.6"
-    }
-  }
-
-  cloud {
-    organization = "chammanganti-homelab"
-    workspaces {
-      name = "homelab"
     }
   }
 }
