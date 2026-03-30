@@ -10,11 +10,11 @@ terraform {
   required_providers {
     helm = {
       source  = "hashicorp/helm"
-      version = "3.1.1
+      version = "3.1.1"
     }
-    kubernetes = {
-      source  = "hashicorp/kubernetes"
-      version = "3.0.1"
+    kubectl = {
+      source  = "alekc/kubectl"
+      version = "2.1.6"
     }
   }
 
@@ -27,12 +27,12 @@ terraform {
 }
 
 provider "helm" {
-  kubernetes {
+  kubernetes = {
     config_path = "${local.k3s_config}"
   }
 }
 
-provider "kubernetes" {
+provider "kubectl" {
   config_path = "${local.k3s_config}"
 }
   EOF

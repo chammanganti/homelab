@@ -14,34 +14,32 @@ resource "helm_release" "metallb" {
   timeout = 30
 }
 
-resource "kubenetes_manifest" "metallb_ip_pool" {
-  manifest = {
-    apiVersion = "metallb.io/v1beta1"
-    kind       = "IPAddressPool"
-    metadata = {
-      name      = "homelab-pool"
-      namespace = "${local.namespace}"
-    }
-    spec = {
-      addresses = [var.ip_range]
-    }
-  }
+resource "kubectl_manifest" "metallb_ip_pool" {
+  yaml_body = <<YAML
+    apiVersion: metallb.io/v1beta1
+    kind: IPAddressPool
+    metadata:
+      name: homelab-pool
+      namespace: ${var.namespace}
+    spec:
+      addresses:
+        - ${var.ip_range}
+  YAML
 
   depends_on = [helm_release.metallb]
 }
 
-resource "kubernetes_manifest" "metallb_l2_advertisement" {
-  manifest = {
-    apiVersion = "metallb.io/v1beta1"
-    kind       = "L2Advertisement"
-    metadata = {
-      name      = "homelab-l2"
-      namespace = "${local.namespace}"
-    }
-    spec = {
-      ipAddressPool = ["homelab-pool"]
-    }
-  }
+resource "kubectl_manifest" "metallb_l2_advertisement" {
+  yaml_body = <<YAML
+    apiVersion: metallb.io/v1beta1
+    kind: L2Advertisement
+    metadata:
+      name: homelab-l2
+      namespace: ${var.namespace}
+    spec:
+      ipAddressPools:
+        - homelab-pool
+  YAML
 
   depends_on = [helm_release.metallb]
 }
