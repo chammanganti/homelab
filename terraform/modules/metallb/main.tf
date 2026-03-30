@@ -1,17 +1,21 @@
-locals {
-  namespace = "metallb-system"
-}
-
 resource "helm_release" "metallb" {
-  name             = "metallb"
+  name             = var.name
   repository       = "https://metallb.github.io/metallb"
   chart            = "metallb"
-  namespace        = local.namespace
+  namespace        = var.namespace
   create_namespace = true
-  version          = "0.15.3"
+  version          = var.chart_version
 
   wait    = true
-  timeout = 30
+  timeout = 300
+
+  values = [
+    yamlencode({
+      speaker = {
+        tolerations = var.speaker_tolerations
+      }
+    })
+  ]
 }
 
 resource "kubectl_manifest" "metallb_ip_pool" {

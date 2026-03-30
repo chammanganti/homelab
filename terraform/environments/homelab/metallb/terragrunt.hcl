@@ -7,5 +7,16 @@ terraform {
 }
 
 inputs = {
-  ip_range = "192.168.254.201-192.168.254.210"
+  name          = "metallb"
+  namespace     = "metallb-system"
+  chart_version = "0.15.3"
+  ip_range      = "192.168.254.201-192.168.254.210"
+  speaker_tolerations = [
+    {
+      key      = "workload"
+      operator = "Equal"
+      value    = "ephemeral"
+      effect   = "NoSchedule"
+    }
+  ]
 }
