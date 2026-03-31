@@ -8,4 +8,11 @@ resource "helm_release" "argocd" {
 
   wait    = true
   timeout = 300
+
+  set = [
+    {
+      name  = "global.domain"
+      value = var.domain
+    }
+  ]
 }

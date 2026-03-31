@@ -15,3 +15,8 @@ variable "chart_version" {
   type        = string
   default     = "v3.3.6"
 }
+
+variable "domain" {
+  type    = string
+  default = "argocd.chammanganti.dev"
+}

@@ -10,4 +10,5 @@ inputs = {
   name          = "argocd"
   namespace     = "argocd"
   chart_version = "9.4.17"
+  domain        = "argocd.chammanganti.dev"
 }
