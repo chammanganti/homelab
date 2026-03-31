@@ -11,8 +11,7 @@ resource "helm_release" "traefik" {
 
   values = [
     templatefile("${path.module}/values.yaml.tpl", {
-      tls_secret_name = var.tls_secret_name
-      tolerations     = var.tolerations
+      tolerations = var.tolerations
     })
   ]
 }

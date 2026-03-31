@@ -16,11 +16,6 @@ variable "chart_version" {
   default     = "v39.0.5"
 }
 
-variable "tls_secret_name" {
-  type    = string
-  default = "wildcard-chammanganti-dev-tls"
-}
-
 variable "tolerations" {
   type = list(object({
     key      = string

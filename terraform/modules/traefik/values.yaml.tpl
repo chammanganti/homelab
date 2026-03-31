@@ -27,33 +27,10 @@ providers:
   kubernetesIngress:
     enabled: false
   kubernetesGateway:
-    enabled: true
+    enabled: false
   kubernetesCRD:
     enabled: true
     allowCrossNamespace: true
-
-gateway:
-  listeners:
-    web:
-      port: 80
-      protocol: HTTP
-      namespacePolicy:
-        from: All
-    websecure:
-      port: 443
-      protocol: HTTPS
-      namespacePolicy:
-        from: All
-      mode: Terminate
-      certificateRefs:
-        - kind: Secret
-          name: ${tls_secret_name}
-          group: ""
-
-tlsStore:
-  default:
-    defaultCertificate:
-      secretName: ${tls_secret_name}
 
 logs:
   general:

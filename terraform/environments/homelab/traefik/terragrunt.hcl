@@ -7,10 +7,9 @@ terraform {
 }
 
 inputs = {
-  name            = "traefik"
-  namespace       = "traefik"
-  chart_version   = "v39.0.5"
-  tls_secret_name = "wildcard-chammanganti-dev-tls"
+  name          = "traefik"
+  namespace     = "traefik"
+  chart_version = "v39.0.5"
   tolerations = [
     {
       key      = "workload"
