@@ -7,9 +7,7 @@ terraform {
 }
 
 inputs = {
-  name           = "argocd"
-  namespace      = "argocd"
-  chart_version  = "9.4.17"
-  domain         = "argocd.chammanganti.dev"
-  cluster_issuer = "letsencrypt-prod"
+  name          = "argocd"
+  namespace     = "argocd"
+  chart_version = "9.4.17"
 }

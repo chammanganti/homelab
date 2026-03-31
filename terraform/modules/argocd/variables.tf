@@ -20,8 +20,3 @@ variable "domain" {
   type    = string
   default = "argocd.chammanganti.dev"
 }
-
-variable "tls_secret_name" {
-  type    = string
-  default = "wildcard-chammanganti-dev-tls"
-}
