@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: home-assistant
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/chammanganti/homelab
+    targetRevision: HEAD
+    path: charts/home-assistant
+    helm:
+      releaseName: home-assistant
+      values: |
+        timezone: Asia/Manila
+        nodeSelector:
+          kubernetes.io/hostname: raspberrypi
+        ingress:
+          enabled: true
+          hostname: ha.chammanganti.dev
+          tlsSecretName: home-assistant-tls
+        dongles:
+          - name: zigbee
+            ttyUSB: /dev/ttyUSB0
+            byId: usb-Itead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_V2_eac4ca36e073ef1189ccc774d9b539e6-if00-port0
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: home-assistant
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
