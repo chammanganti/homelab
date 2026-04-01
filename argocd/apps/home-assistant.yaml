@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/chammanganti/homelab
     targetRevision: HEAD
-    path: charts/home-assistant
+    path: kubernetes/charts/home-assistant
     helm:
       releaseName: home-assistant
       values: |
