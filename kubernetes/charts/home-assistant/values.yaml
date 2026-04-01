@@ -1,0 +1,58 @@
+image:
+  repository: ghcr.io/home-assistant/home-assistant
+  tag: stable
+  pullPolicy: IfNotPresent
+
+replicaCount: 1
+
+nameOverride: ""
+fullnameOverride: ""
+
+nodeSelector:
+  kubernetes.io/hostname: raspberrypi
+
+timezone: Asia/Manila
+
+hostNetwork: true
+
+persistence:
+  enabled: true
+  storageClass: local-path
+  size: 5Gi
+  accessMode: ReadWriteOnce
+
+dongles:
+  - name: zigbee
+    ttyUSB: /dev/ttyUSB0
+    byId: usb-Itead_Sonoff_Zigbee_3.0_USB_Dongle_Plus_V2_eac4ca36e073ef1189ccc774d9b539e6-if00-port0
+
+resources:
+  requests:
+    memory: 512Mi
+    cpu: 250m
+  limits:
+    memory: 1Gi
+    cpu: 1000m
+
+probes:
+  liveness:
+    enabled: true
+    initialDelaySeconds: 60
+    periodSeconds: 30
+    timeoutSeconds: 10
+    failureThreshold: 5
+  readiness:
+    enabled: true
+    initialDelaySeconds: 30
+    periodSeconds: 15
+    timeoutSeconds: 5
+    failureThreshold: 3
+
+service:
+  type: ClusterIP
+  port: 8123
+
+ingress:
+  enabled: true
+  hostname: ha.chammanganti.dev
+  tlsSecretName: home-assistant-tls
