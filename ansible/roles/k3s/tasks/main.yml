@@ -9,7 +9,6 @@
     curl -sfL https://get.k3s.io | sh -s - \
       --disable traefik \
       --disable servicelb \
-      --disable local-storage
       --cluster-cidr {{ k3s_pod_cidr }} \
       --service-cidr {{ k3s_service_cidr }}
   when: not k3s_binary.stat.exists
