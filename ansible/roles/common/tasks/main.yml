@@ -14,6 +14,11 @@
     regexp: '^([^#].*\s+swap\s+.*)$'
     replace: '#\1'
 
+- name: check if cmdline.txt exists
+  stat:
+    path: /boot/firmware/cmdline.txt
+  register: cmdline_file
+
 - name: enable cgroup memory
   lineinfile:
     path: /boot/firmware/cmdline.txt
@@ -21,6 +26,7 @@
     regexp: '^((?!.*cgroup_enable=memory).*)$'
     line: '\1 cgroup_enable=memory'
   notify: reboot
+  when: cmdline_file.stat.exists
 
 - name: enable cgroup memory=1
   lineinfile:
@@ -29,3 +35,4 @@
     regexp: '^((?!.*cgroup_memory=1).*)$'
     line: '\1 cgroup_memory=1'
   notify: reboot
+  when: cmdline_file.stat.exists
