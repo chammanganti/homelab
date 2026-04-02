@@ -13,6 +13,14 @@ resource "helm_release" "argocd" {
     {
       name  = "global.domain"
       value = var.domain
+    },
+    {
+      name  = "notifications.enabled"
+      value = false
+    },
+    {
+      name  = "dex.enabled"
+      value = false
     }
   ]
 }
