@@ -4,6 +4,13 @@
     update_cache: yes
     upgrade: yes
 
+- name: install deps
+  apt:
+    name:
+      - iptables
+      - iptables-persistent
+    state: present
+
 - name: disable swap
   command: swapoff -a
   when: ansible_facts['swaptotal_mb'] > 0
