@@ -3,3 +3,4 @@
 *.tfvars
 .terraform/
 .terragrunt-cache
+.secret
