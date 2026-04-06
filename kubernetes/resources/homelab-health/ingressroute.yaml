@@ -7,13 +7,14 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`hlbe.chammanganti.dev`) && PathPrefix(`/health`)
+    - match: Host(`hlbe.chammanganti.dev`) && PathPrefix(`/hlh`)
       kind: Rule
       services:
         - name: health
           port: 80
       middlewares:
         - name: health-headers
+        - name: health-strip-prefix
   tls:
     secretName: hlbe-tls
 ---
@@ -40,7 +41,7 @@ spec:
   entryPoints:
     - web
   routes:
-    - match: Host(`hlbe.chammanganti.dev`) && PathPrefix(`/health`)
+    - match: Host(`hlbe.chammanganti.dev`) && PathPrefix(`/hlh`)
       kind: Rule
       middlewares:
         - name: health-redirect-https
@@ -66,4 +67,4 @@ metadata:
 spec:
   stripPrefix:
     prefixes:
-      - /health
+      - /hlh
