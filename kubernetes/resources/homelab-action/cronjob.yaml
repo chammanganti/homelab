@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: demo-teardown
+  namespace: homelab
+spec:
+  schedule: "0 * * * *"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          serviceAccountName: action
+          restartPolicy: OnFailure
+          containers:
+            - name: teardown
+              image: bitnami/kubectl:latest
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  kubectl -n argocd get applications \
+                    -l app-type=demo \
+                    -o name | xargs -r kubectl -n argocd delete
