@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: action
+  namespace: homelab
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: action
+  template:
+    metadata:
+      labels:
+        app: action
+    spec:
+      serviceAccountName: action
+      imagePullSecrets:
+        - name: ghcr-pull-secret
+      containers:
+        - name: action
+          image: ghcr.io/chammanganti/homelab-action:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: CORS_ORIGIN
+              value: https://chammanganti.dev
+            - name: REPO_URL
+              value: https://github.com/chammanganti/homelab
+            - name: TARGET_REV
+              value: HEAD
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /ready
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 30

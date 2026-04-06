@@ -1,0 +1,70 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: action
+  namespace: homelab
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`hlbe.chammanganti.dev`) && PathPrefix(`/act`)
+      kind: Rule
+      services:
+        - name: action
+          port: 80
+      middlewares:
+        - name: action-headers
+        - name: action-strip-prefix
+  tls:
+    secretName: hlbe-tls
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: action-headers
+  namespace: homelab
+spec:
+  headers:
+    customRequestHeaders:
+      X-Forwarded-Proto: "https"
+    customResponseHeaders:
+      Access-Control-Allow-Origin: "https://chammanganti.dev"
+      Access-Control-Allow-Methods: "GET,POST,OPTIONS"
+      Access-Control-Allow-Headers: "Content-Type"
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: action-http
+  namespace: homelab
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`hlbe.chammanganti.dev`) && PathPrefix(`/act`)
+      kind: Rule
+      middlewares:
+        - name: action-redirect-https
+      services:
+        - name: health
+          port: 80
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: action-redirect-https
+  namespace: homelab
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: action-strip-prefix
+  namespace: homelab
+spec:
+  stripPrefix:
+    prefixes:
+      - /act
