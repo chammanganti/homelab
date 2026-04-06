@@ -8,7 +8,7 @@ data:
     interval: 15s
     targets:
       - name: traefik
-        namespace: treafik
+        namespace: traefik
         deployment: traefik
       - name: argocd
         namespace: argocd
