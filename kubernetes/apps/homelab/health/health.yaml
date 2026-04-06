@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: health-checker
+  name: health
   namespace: homelab
 spec:
   project: default
