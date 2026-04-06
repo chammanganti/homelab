@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: health-config
+  namespace: homelab
+data:
+  config.yaml: |
+    interval: 15s
+    targets:
+      - name: traefik
+        namespace: treafik
+        deployment: traefik
+      - name: argocd
+        namespace: argocd
+        deployment: argocd-server

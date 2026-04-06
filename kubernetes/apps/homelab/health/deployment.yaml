@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: health
+  namespace: homelab
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: health
+  template:
+    metadata:
+      labels:
+        app: health
+    spec:
+      serviceAccountName: health
+      imagePullSecrets:
+        - name: ghcr-pull-secret
+      containers:
+        - name: health
+          image: ghcr.io/chammanganti/homelab-health:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: CONFIG_PATH
+              value: /etc/homelab-health/config.yaml
+            - name: CORS_ORIGIN
+              value: https://chammanganti.dev
+          volumeMounts:
+            - name: config
+              mountPath: /etc/homelab-health
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 30
+      volumes:
+        - name: config
+          configMap:
+            name: health-config
