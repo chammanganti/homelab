@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-app
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: demo-app
+          image: ghcr.io/chammanganti/homelab-demo-app-2:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: CORS_ORIGIN
+              value: https://chammanganti.dev

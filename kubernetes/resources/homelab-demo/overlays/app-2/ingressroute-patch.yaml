@@ -1,0 +1,18 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: demo-app
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`hld.chammanganti.dev`) && PathPrefix(`/demo-app-2`)
+      kind: Rule
+      services:
+        - name: demo-app-2
+          port: 80
+      middlewares:
+        - name: demo-app-headers
+        - name: demo-app-strip-prefix
+  tls:
+    secretName: hld-tls
