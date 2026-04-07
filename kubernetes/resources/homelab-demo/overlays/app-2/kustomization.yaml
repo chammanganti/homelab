@@ -6,19 +6,4 @@ nameSuffix: "-2"
 commonLabels:
   app: demo-app-2
 patches:
-  - path: deployment-patch.yaml
-    target:
-      kind: Deployment
-      name: demo-app
-  - path: ingressroute-patch.yaml
-    target:
-      kind: IngressRoute
-      name: demo-app
-  - path: ingressroute-http-patch.yaml
-    target:
-      kind: IngressRoute
-      name: demo-app-http
-  - path: middleware-strip-prefix-patch.yaml
-    target:
-      kind: Middleware
-      name: demo-app-strip-prefix
+  - path: patch.yaml

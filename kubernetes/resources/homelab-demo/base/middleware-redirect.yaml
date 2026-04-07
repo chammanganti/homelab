@@ -1,9 +1,0 @@
-apiVersion: traefik.io/v1alpha1
-kind: Middleware
-metadata:
-  name: demo-app-redirect-https
-  namespace: homelab-demo
-spec:
-  redirectScheme:
-    scheme: https
-    permanent: true

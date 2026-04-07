@@ -1,8 +1,0 @@
-apiVersion: traefik.io/v1alpha1
-kind: Middleware
-metadata:
-  name: demo-app-strip-prefix
-spec:
-  stripPrefix:
-    prefixes:
-      - /demo-app-2
