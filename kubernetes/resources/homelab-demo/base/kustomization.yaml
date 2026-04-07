@@ -3,8 +3,3 @@ kind: Kustomization
 resources:
   - deployment.yaml
   - service.yaml
-  - ingressroute.yaml
-  - ingressroute-http.yaml
-  - middleware-headers.yaml
-  - middleware-redirect.yaml
-  - middleware-strip-prefix.yaml
