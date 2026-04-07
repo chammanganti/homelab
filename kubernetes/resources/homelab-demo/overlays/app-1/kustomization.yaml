@@ -17,7 +17,7 @@ patches:
   - path: ingressroute-http-patch.yaml
     target:
       kind: IngressRoute
-      name: demo-app
+      name: demo-app-http
   - path: middleware-strip-prefix-patch.yaml
     target:
       kind: Middleware
