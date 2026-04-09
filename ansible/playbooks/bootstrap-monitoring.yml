@@ -1,0 +1,11 @@
+---
+- name: bootstrap monitoring
+  hosts: monitoring
+  become: true
+  roles:
+    - role: common
+      tags: common
+    - role: prerequisites
+      tags: prerequisites
+    - role: k3s
+      tags: k3s
