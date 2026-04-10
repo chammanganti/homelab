@@ -1,0 +1,7 @@
+---
+- name: allow home assistant
+  ufw:
+    rule: allow
+    port: 8123
+    proto: tcp
+    src: 192.168.254.0/24

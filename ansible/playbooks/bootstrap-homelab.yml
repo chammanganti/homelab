@@ -13,3 +13,5 @@
       tags: firewall
     - role: cloudflared
       tags: cloudflared
+    - role: homelab
+      tags: homelab
