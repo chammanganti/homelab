@@ -71,27 +71,6 @@
     rule: allow
     src: "{{ k3s_service_cidr }}"
 
-- name: allow home assistant
-  ufw:
-    rule: allow
-    port: 8123
-    proto: tcp
-    src: 192.168.254.0/24
-
-- name: allow node exporter
-  ufw:
-    rule: allow
-    port: 9100
-    proto: tcp
-    src: 192.168.254.0/24
-
-- name: allow kube state metrics
-  ufw:
-    rule: allow
-    port: 8080
-    proto: tcp
-    src: 192.168.254.0/24
-
 - name: enable ufw
   ufw:
     state: enabled
