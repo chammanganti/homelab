@@ -16,7 +16,7 @@ spec:
       values: |
         timezone: Asia/Manila
         nodeSelector:
-          kubernetes.io/hostname: rpi
+          kubernetes.io/hostname: homelab-0
         ingress:
           enabled: true
           hostname: ha.chammanganti.dev
