@@ -11,3 +11,5 @@
       tags: k3s
     - role: firewall
       tags: firewall
+    - role: cloudflared
+      tags: cloudflared
