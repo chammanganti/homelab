@@ -9,3 +9,5 @@
       tags: prerequisites
     - role: k3s
       tags: k3s
+    - role: firewall
+      tags: firewall
