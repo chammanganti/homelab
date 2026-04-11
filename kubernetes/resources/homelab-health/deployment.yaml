@@ -31,6 +31,11 @@ spec:
                 secretKeyRef:
                   name: sentry-dsn
                   key: dsn
+            - name: SENTRY_PANIC_MAGIC_TEXT
+              valueFrom:
+                secretKeyRef:
+                  name: sentry-panic
+                  key: magic_text
           volumeMounts:
             - name: config
               mountPath: /etc/homelab-health
