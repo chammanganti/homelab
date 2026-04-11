@@ -9,5 +9,7 @@ resource "helm_release" "kube_prometheus_stack" {
   wait    = true
   timeout = 300
 
-  values = [file("${path.module}/values.yaml")]
+  values = [templatefile("${path.module}/values.yaml.tpl", {
+    grafana_existing_secret = var.grafana_existing_secret
+  })]
 }

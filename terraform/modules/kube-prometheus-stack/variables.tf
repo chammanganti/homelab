@@ -15,3 +15,8 @@ variable "chart_version" {
   type        = string
   default     = "83.3.0"
 }
+
+variable "grafana_existing_secret" {
+  description = "Existing grafana secret name"
+  type        = string
+}

@@ -57,6 +57,10 @@ alertmanager:
 
 grafana:
   enabled: true
+  admin:
+    existingSecret: "${grafana_existing_secret}"
+    userKey: admin-user
+    passwordKey: admin-password
 
 kubernetesServiceMonitors:
   enabled: true
