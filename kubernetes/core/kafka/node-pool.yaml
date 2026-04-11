@@ -2,6 +2,7 @@ apiVersion: kafka.strimzi.io/v1
 kind: KafkaNodePool
 metadata:
   name: dual-role
+  namespace: kafka
   labels:
     strimzi.io/cluster: homelab-kafka
 spec:
