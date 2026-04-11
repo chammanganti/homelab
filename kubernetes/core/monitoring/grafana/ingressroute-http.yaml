@@ -12,5 +12,5 @@ spec:
     middlewares:
     - name: grafana-redirect-https
     services:
-    - name: grafana
+    - name: kube-prometheus-stack-grafana
       port: 80
