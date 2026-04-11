@@ -26,6 +26,11 @@ spec:
               value: /etc/homelab-health/config.yaml
             - name: CORS_ORIGIN
               value: https://chammanganti.dev
+            - name: SENTRY_DSN
+              valueFrom:
+                secretKeyRef:
+                  name: sentry-dsn
+                  key: dsn
           volumeMounts:
             - name: config
               mountPath: /etc/homelab-health
