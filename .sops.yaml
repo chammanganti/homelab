@@ -1,0 +1,3 @@
+creation_rules:
+  - path_regex: talos/clusters/.*/talsecret\.yaml
+    age: age13egx9p87lk2k3s0e58mlfrfxkzttup0ydcpr5v9pnx032nwwzuxqrwrkwm

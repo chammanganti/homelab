@@ -1,0 +1,22 @@
+clusterName: rpi
+talosVersion: v1.12.5
+kubernetesVersion: v1.32.3
+endpoint: https://192.168.254.120:6443
+
+cniConfig:
+  name: flannel
+
+nodes:
+  - hostname: rpi
+    ipAddress: 192.168.254.120
+    installDisk: /dev/mmcblk0
+    controlPlane: true
+    schematic:
+      overlay:
+        name: rpi_generic
+        image: siderolabs/sbc-raspberrypi
+
+patches:
+  - |-
+    cluster:
+      allowSchedulingOnControlPlanes: true
