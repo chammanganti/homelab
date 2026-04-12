@@ -1,3 +1,16 @@
+resource "kubectl_manifest" "metallb_namespace" {
+  yaml_body = <<YAML
+    apiVersion: v1
+    kind: Namespace
+    metadata:
+      name: ${var.namespace}
+      labels:
+        pod-security.kubernetes.io/enforce: privileged
+        pod-security.kubernetes.io/audit: privileged
+        pod-security.kubernetes.io/warn: privileged
+  YAML
+}
+
 resource "helm_release" "metallb" {
   name             = var.name
   repository       = "https://metallb.github.io/metallb"
@@ -16,6 +29,8 @@ resource "helm_release" "metallb" {
       }
     })
   ]
+
+  depends_on = [kubectl_manifest.metallb_namespace]
 }
 
 resource "kubectl_manifest" "metallb_ip_pool" {
