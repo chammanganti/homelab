@@ -18,7 +18,7 @@ spec:
       imagePullSecrets:
         - name: ghcr-pull-secret
       containers:
-        - name: action
+        - name: kafka-test-logs
           image: ghcr.io/chammanganti/homelab-kafka-test-logs:latest
           resources:
             requests:
