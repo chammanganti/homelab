@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-test-logs
+  namespace: homelab
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-test-logs
+  template:
+    metadata:
+      labels:
+        app: kafka-test-logs
+    spec:
+      imagePullSecrets:
+        - name: ghcr-pull-secret
+      containers:
+        - name: action
+          image: ghcr.io/chammanganti/homelab-kafka-test-logs:latest
+          resources:
+            requests:
+              memory: 64Mi
+              cpu: 50m
+            limits:
+              memory: 128Mi
+              cpu: 200m
+          env:
+            - name: KAFKA_BROKERS
+              value: homelab-kafka-kafka-bootstrap.kafka.svc.cluster.local:9092
+            - name: KAFKA_TOPIC
+              value: logs
+            - name: KAFKA_GROUP_ID
+              value: homelab-logs-consumer
+            - name: LOKI_ENDPOINT
+              value: http://loki-headless.monitoring.svc.cluster.local:3100
