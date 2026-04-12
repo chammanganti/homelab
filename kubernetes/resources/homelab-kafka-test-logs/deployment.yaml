@@ -12,6 +12,8 @@ spec:
     metadata:
       labels:
         app: kafka-test-logs
+      annotations:
+        fluentbit.io/exclude: "true"
     spec:
       imagePullSecrets:
         - name: ghcr-pull-secret
