@@ -112,9 +112,6 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
-            - name: localtime
-              mountPath: /etc/localtime
-              readOnly: true
             - name: dbus
               mountPath: /run/dbus
               readOnly: true
