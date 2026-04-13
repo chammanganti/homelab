@@ -13,9 +13,9 @@ inputs = {
   ip_range      = "192.168.254.201-192.168.254.210"
   speaker_tolerations = [
     {
-      key      = "workload"
-      operator = "Equal"
-      value    = "ephemeral"
+      key      = "node-role.kubernetes.io/control-plane"
+      operator = "Exists"
+      value    = ""
       effect   = "NoSchedule"
     }
   ]
