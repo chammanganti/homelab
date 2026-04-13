@@ -1,0 +1,40 @@
+clusterName: homelab
+talosVersion: v1.12.6
+kubernetesVersion: v1.35.3
+endpoint: https://192.168.254.101:6443
+
+cniConfig:
+  name: flannel
+
+nodes:
+  - hostname: homelab-0
+    ipAddress: 192.168.254.101
+    installDisk: /dev/sdb
+    controlPlane: true
+    schematic:
+      customization:
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/intel-ucode
+
+patches:
+  - |-
+    cluster:
+      allowSchedulingOnControlPlanes: true
+      apiServer:
+        admissionControl:
+          - name: PodSecurity
+            configuration:
+              apiVersion: pod-security.admission.config.k8s.io/v1alpha1
+              kind: PodSecurityConfiguration
+              defaults:
+                enforce: privileged
+                enforce-version: latest
+                audit: privileged
+                audit-version: latest
+                warn: privileged
+                warn-version: latest
+              exemptions:
+                namespaces: []
+                runtimeClasses: []
+                usernames: []
