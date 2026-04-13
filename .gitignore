@@ -5,3 +5,4 @@
 .terragrunt-cache
 .secret
 *.key
+*.ref
