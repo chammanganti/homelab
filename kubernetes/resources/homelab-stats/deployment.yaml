@@ -13,6 +13,7 @@ spec:
       labels:
         app: stats
     spec:
+      serviceAccountName: stats
       imagePullSecrets:
         - name: ghcr-pull-secret
       containers:
